@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vnetName": {
+        "type": "string",
+        "defaultValue": "financeVNet",
+        "metadata": {
+          "description": "Name of the virtual network"
+        }
+      },
+      "addressPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.0.0/16",
+        "metadata": {
+          "description": "Address space for the virtual network"
+        }
+      },
+      "subnetPrefix": {
+        "type": "string",
+        "defaultValue": "10.0.1.0/24",
+        "metadata": {
+          "description": "Address prefix for the subnet"
+        }
+      },
+      "subnetName": {
+        "type": "string",
+        "defaultValue": "defaultSubnet",
+        "metadata": {
+          "description": "Name of the subnet"
+        }
+      }
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Network/virtualNetworks",
+        "apiVersion": "2020-11-01",
+        "name": "[parameters('vnetName')]",
+        "location": "westus",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "[parameters('addressPrefix')]"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "[parameters('subnetName')]",
+              "properties": {
+                "addressPrefix": "[parameters('subnetPrefix')]"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+  

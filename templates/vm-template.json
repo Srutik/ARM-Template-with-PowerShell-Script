@@ -1,0 +1,103 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vmName": {
+        "type": "string",
+        "defaultValue": "financeVM",
+        "metadata": {
+          "description": "Name of the virtual machine"
+        }
+      },
+      "vmSize": {
+        "type": "string",
+        "defaultValue": "Standard_DS2_v2",
+        "metadata": {
+          "description": "Size of the virtual machine"
+        }
+      },
+      "adminUsername": {
+        "type": "string",
+        "metadata": {
+          "description": "Admin username for the virtual machine"
+        }
+      },
+      "adminPassword": {
+        "type": "securestring",
+        "metadata": {
+          "description": "Admin password for the virtual machine"
+        }
+      },
+      "vnetName": {
+        "type": "string",
+        "defaultValue": "financeVNet",
+        "metadata": {
+          "description": "Name of the virtual network"
+        }
+      },
+      "subnetName": {
+        "type": "string",
+        "defaultValue": "defaultSubnet",
+        "metadata": {
+          "description": "Subnet for the virtual machine"
+        }
+      }
+    },
+    "resources": [
+            {
+        "type": "Microsoft.Network/networkInterfaces",
+        "apiVersion": "2020-11-01",
+        "name": "[concat(parameters('vmName'), 'NIC')]",
+        "location": "westus",
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "ipConfig1",
+              "properties": {
+                "subnet": {
+                  "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+                },
+                "privateIPAllocationMethod": "Dynamic"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "Microsoft.Compute/virtualMachines",
+        "apiVersion": "2020-12-01",
+        "name": "[parameters('vmName')]",
+        "location": "westus",
+        "properties": {
+          "hardwareProfile": {
+            "vmSize": "[parameters('vmSize')]"
+          },
+          "osProfile": {
+            "computerName": "[parameters('vmName')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]"
+          },
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmName'), 'NIC'))]"
+              }
+            ]
+          },
+          "storageProfile": {
+            "imageReference": {
+              "publisher": "Canonical",
+              "offer": "UbuntuServer",
+              "sku": "18.04-LTS",
+              "version": "latest"
+            },
+            "osDisk": {
+              "createOption": "FromImage"
+            }
+          }
+        }
+      }
+  
+    ]
+  }
+  

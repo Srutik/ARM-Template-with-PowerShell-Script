@@ -1,0 +1,92 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20241122224258
+Username: SRUTIK-2606\LENOVO
+RunAs User: SRUTIK-2606\LENOVO
+Configuration Name: 
+Machine: SRUTIK-2606 (Microsoft Windows NT 10.0.22631.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\LENOVO\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 3664
+PSVersion: 5.1.22621.4249
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.4249
+BuildVersion: 10.0.22621.4249
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is ./logs/deployment.log
+Deployment started. Logs will be saved to ./logs/deployment.log.
+Creating Resource Group: FinanceResources in westus...
+Confirm
+Provided resource group already exists. Are you sure you want to update it?
+&Yes  &No  &Suspend
+N
+Deploying Virtual Network...
+
+
+DeploymentName          : vnet-template
+ResourceGroupName       : FinanceResources
+ProvisioningState       : Succeeded
+Timestamp               : 23-11-2024 03:43:26
+Mode                    : Incremental
+TemplateLink            :
+Parameters              :
+                          Name             Type                       Value
+                          ===============  =========================  ==========
+                          vnetName         String                     "financeVNet"
+                          addressPrefix    String                     "10.0.0.0/16"
+                          subnetPrefix     String                     "10.0.1.0/24"
+                          subnetName       String                     "defaultSubnet"
+
+Outputs                 :
+DeploymentDebugLogLevel :
+
+Deploying Storage Account...
+DeploymentName          : storage-template
+ResourceGroupName       : FinanceResources
+ProvisioningState       : Succeeded
+Timestamp               : 23-11-2024 03:43:40
+Mode                    : Incremental
+TemplateLink            :
+Parameters              :
+                          Name                  Type                       Value
+                          ====================  =========================  ==========
+                          storageAccountName    String                     "financestorageacct2311"
+                          sku                   String                     "Standard_LRS"
+
+Outputs                 :
+DeploymentDebugLogLevel :
+
+Deploying Virtual Machine...
+DeploymentName          : vm-template
+ResourceGroupName       : FinanceResources
+ProvisioningState       : Succeeded
+Timestamp               : 23-11-2024 03:43:55
+Mode                    : Incremental
+TemplateLink            :
+Parameters              :
+                          Name             Type                       Value
+                          ===============  =========================  ==========
+                          vmName           String                     "financeVM"
+                          vmSize           String                     "Standard_DS2_v2"
+                          adminUsername    String                     "adminUser"
+                          adminPassword    SecureString               null
+                          vnetName         String                     "financeVNet"
+                          subnetName       String                     "defaultSubnet"
+
+Outputs                 :
+DeploymentDebugLogLevel :
+
+Deployment Completed. Verifying Resources in Resource Group: FinanceResources...
+Resource Name: financeVNet, Type: Microsoft.Network/virtualNetworks
+Resource Name: financeVMNIC, Type: Microsoft.Network/networkInterfaces
+Resource Name: financestorageacct2311, Type: Microsoft.Storage/storageAccounts
+Resource Name: financeVM, Type: Microsoft.Compute/virtualMachines
+Resource Name: financeVM_OsDisk_1_f017bcf3d8834592935e6c9420e8dc8b, Type: Microsoft.Compute/disks
+All resources deployed successfully!
+**********************
+Windows PowerShell transcript end
+End time: 20241122224407
+**********************

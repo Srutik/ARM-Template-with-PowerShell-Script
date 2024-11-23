@@ -1,0 +1,25 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vmName": {
+        "value": "financeVM"
+      },
+      "vmSize": {
+        "value": "Standard_DS2_v2"
+      },
+      "adminUsername": {
+        "value": "adminUser"
+      },
+      "adminPassword": {
+        "value": "P@ssword1234"
+      },
+      "vnetName": {
+        "value": "financeVNet"
+      },
+      "subnetName": {
+        "value": "defaultSubnet"
+      }
+    }
+  }
+  
